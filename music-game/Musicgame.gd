@@ -5,6 +5,7 @@ extends Node2D
 @export var sounds : Array = ["Button 1.mp3", "Button 2.mp3", "Button 3.mp3", "Button 4.mp3"]  # Sound file names
 var sequence_position : int = 0
 var is_playing_sequence : bool = false  # Prevent clicking during sequence playback
+var score : int = 0  # Initialize score
 
 # Declare buttons with onready to connect them when the scene is ready
 @onready var button1 : TextureButton = $'Button 1'
@@ -14,6 +15,18 @@ var is_playing_sequence : bool = false  # Prevent clicking during sequence playb
 
 # Texture for when the button is pressed (assign this in the editor)
 @export var pressed_texture : Texture  
+
+# Normal textures for each button (assign in the editor)
+@onready var normal_texture1 : Texture = button1.texture_normal
+@onready var normal_texture2 : Texture = button2.texture_normal
+@onready var normal_texture3 : Texture = button3.texture_normal
+@onready var normal_texture4 : Texture = button4.texture_normal
+
+# Label node to display score
+@onready var score_label : Label = $'ScoreLabel'
+
+# Feedback Label for showing correct/wrong messages
+@onready var feedback_label : Label = $'FeedbackLabel'
 
 func _ready():
 	# Connect button signals with the index using bind() instead of directly passing an array
@@ -25,6 +38,12 @@ func _ready():
 	# Generate the first sequence
 	generate_sequence(3)  # Starting with a sequence of 3 sounds
 	play_sequence()
+
+	# Update the score display
+	update_score_label()
+
+	# Initially hide the feedback label
+	feedback_label.visible = false
 
 # Generate a random sequence of indices
 func generate_sequence(length : int) -> void:
@@ -52,19 +71,24 @@ func play_sequence() -> void:
 
 	is_playing_sequence = false  # Allow user to interact after the sequence is played
 
-# Flash button when sound plays (using color modulation instead of texture change)
+# Flash button when sound plays (set pressed texture for a short time)
 func flash_button(button : TextureButton) -> void:
-	# Store the original color (normal state)
-	var original_modulate = button.modulate
+	# Store the original texture (normal state)
+	var original_texture = button.texture_normal
+	var original_pressed_texture = button.texture_pressed
 
-	# Set the button's color to a bright color for flashing effect
-	button.modulate = Color(1, 0, 0)  # Flash with red color
+	# Change the button color to flash it (modulate) to red
+	button.modulate = Color(1, 0, 0)  # Change to red
 
-	# Wait for a short time before returning to the original color
+	# Wait for a short time before returning to the original texture
 	await get_tree().create_timer(0.2).timeout
 	
-	# Reset the color back to the original color
-	button.modulate = original_modulate
+	# Reset the button color back to normal (remove red flash)
+	button.modulate = Color(1, 1, 1)  # Reset to normal (white)
+
+	# Reset the texture to the normal texture after flashing
+	button.texture_normal = original_texture
+	button.texture_pressed = original_pressed_texture
 
 # Handle button clicks
 func _on_button_pressed(button_index : int) -> void:
@@ -75,12 +99,32 @@ func _on_button_pressed(button_index : int) -> void:
 	if button_index == sound_sequence[sequence_position]:
 		sequence_position += 1
 		if sequence_position == sound_sequence.size():
-			# Player completed the sequence correctly, increase sequence length
+			# Player completed the sequence correctly, increase score and sequence length
+			score += 10  # Increase score by 10 (adjust as needed)
 			print("Correct! Moving to the next round.")
+			display_feedback("Correct!", Color(0, 1, 0))  # Green for correct
 			generate_sequence(sound_sequence.size() + 1)
 			play_sequence()
+			update_score_label()  # Update the score display
 	else:
 		# Player made a mistake, reset sequence and start over
 		print("Wrong! Try again.")
+		display_feedback("Wrong!", Color(1, 0, 0))  # Red for wrong
 		sequence_position = 0
 		play_sequence()
+		update_score_label()  # Update the score display even on mistakes
+
+# Function to update the score label
+func update_score_label() -> void:
+	score_label.text = "Score: " + str(score)
+
+# Function to show feedback text
+func display_feedback(message: String, color: Color) -> void:
+	# Update the text and set the color
+	feedback_label.text = message
+	feedback_label.modulate = color  # Set text color based on correct/incorrect
+	feedback_label.visible = true  # Show the feedback
+
+	# Hide the feedback after a short time
+	await get_tree().create_timer(1.0).timeout  # Wait for 1 second
+	feedback_label.visible = false  # Hide it again

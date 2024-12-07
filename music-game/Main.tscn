@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://d2cu23j2o2oy3"]
+[gd_scene load_steps=5 format=3 uid="uid://d2cu23j2o2oy3"]
 
 [ext_resource type="Script" path="res://Musicgame.gd" id="1_pt1eu"]
 [ext_resource type="Texture2D" uid="uid://bjgt68uswdsf4" path="res://art/Button 1 (off).png" id="3_qghvq"]
 [ext_resource type="Texture2D" uid="uid://bm0x8kp3uty4l" path="res://art/Button 1 (on).png" id="4_soxk4"]
+[ext_resource type="PackedScene" uid="uid://cv4optxlb6kjm" path="res://Volumeslider.tscn" id="4_vry1o"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_pt1eu")
@@ -38,3 +39,22 @@ offset_right = 499.0
 offset_bottom = 231.0
 texture_normal = ExtResource("3_qghvq")
 texture_pressed = ExtResource("4_soxk4")
+
+[node name="ScoreLabel" type="Label" parent="."]
+offset_left = 349.0
+offset_top = 78.0
+offset_right = 438.0
+offset_bottom = 112.0
+
+[node name="HSlider" parent="." instance=ExtResource("4_vry1o")]
+offset_left = 521.0
+offset_top = 229.0
+offset_right = 633.0
+offset_bottom = 248.0
+bus_name = "Master"
+
+[node name="FeedbackLabel" type="Label" parent="."]
+offset_left = 355.0
+offset_top = 371.0
+offset_right = 449.0
+offset_bottom = 396.0
