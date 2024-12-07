@@ -1,30 +1,40 @@
-[gd_scene load_steps=2 format=3 uid="uid://d2cu23j2o2oy3"]
+[gd_scene load_steps=4 format=3 uid="uid://d2cu23j2o2oy3"]
 
 [ext_resource type="Script" path="res://Musicgame.gd" id="1_pt1eu"]
+[ext_resource type="Texture2D" uid="uid://bjgt68uswdsf4" path="res://art/Button 1 (off).png" id="3_qghvq"]
+[ext_resource type="Texture2D" uid="uid://bm0x8kp3uty4l" path="res://art/Button 1 (on).png" id="4_soxk4"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_pt1eu")
 
-[node name="Button 1" type="Button" parent="."]
-offset_left = 13.0
-offset_top = 23.0
-offset_right = 81.0
-offset_bottom = 91.0
+[node name="Button 1" type="TextureButton" parent="."]
+offset_left = 400.0
+offset_top = 258.0
+offset_right = 500.0
+offset_bottom = 358.0
+texture_normal = ExtResource("3_qghvq")
+texture_pressed = ExtResource("4_soxk4")
 
-[node name="Button 2" type="Button" parent="."]
-offset_left = 104.0
-offset_top = 22.0
-offset_right = 172.0
-offset_bottom = 90.0
+[node name="Button 2" type="TextureButton" parent="."]
+offset_left = 282.0
+offset_top = 129.0
+offset_right = 382.0
+offset_bottom = 230.0
+texture_normal = ExtResource("3_qghvq")
+texture_pressed = ExtResource("4_soxk4")
 
-[node name="Button 3" type="Button" parent="."]
-offset_left = 105.0
-offset_top = 104.0
-offset_right = 173.0
-offset_bottom = 172.0
+[node name="Button 3" type="TextureButton" parent="."]
+offset_left = 280.0
+offset_top = 255.0
+offset_right = 380.0
+offset_bottom = 355.0
+texture_normal = ExtResource("3_qghvq")
+texture_pressed = ExtResource("4_soxk4")
 
-[node name="Button 4" type="Button" parent="."]
-offset_left = 13.0
-offset_top = 104.0
-offset_right = 81.0
-offset_bottom = 172.0
+[node name="Button 4" type="TextureButton" parent="."]
+offset_left = 399.0
+offset_top = 131.0
+offset_right = 499.0
+offset_bottom = 231.0
+texture_normal = ExtResource("3_qghvq")
+texture_pressed = ExtResource("4_soxk4")
