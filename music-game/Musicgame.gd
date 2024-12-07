@@ -13,10 +13,10 @@ var score : int = 0  # Initialize score
 @onready var button3 : TextureButton = $'Button 3'
 @onready var button4 : TextureButton = $'Button 4'
 
-# Texture for when the button is pressed (assign this in the editor)
+# Texture for when the button is presse
 @export var pressed_texture : Texture  
 
-# Normal textures for each button (assign in the editor)
+# Normal textures for each button
 @onready var normal_texture1 : Texture = button1.texture_normal
 @onready var normal_texture2 : Texture = button2.texture_normal
 @onready var normal_texture3 : Texture = button3.texture_normal
@@ -62,29 +62,28 @@ func play_sequence() -> void:
 		audio_player.stream = sound
 		audio_player.play()
 
-		# Add visual feedback (flash button)
+		# Add visual feedback
 		var button : TextureButton = get_node("Button " + str(index + 1)) as TextureButton
 		flash_button(button)
 
-		# Wait for each sound to play (use await to handle asynchronous behavior)
+		# Wait for each sound to play
 		await get_tree().create_timer(1.0).timeout  # Assuming each sound takes 1 second
 
 	is_playing_sequence = false  # Allow user to interact after the sequence is played
 
-# Flash button when sound plays (set pressed texture for a short time)
+# Flash button when sound 
 func flash_button(button : TextureButton) -> void:
-	# Store the original texture (normal state)
 	var original_texture = button.texture_normal
 	var original_pressed_texture = button.texture_pressed
 
-	# Change the button color to flash it (modulate) to red
-	button.modulate = Color(1, 0, 0)  # Change to red
+	# Change the button color to flash it a color
+	button.modulate = Color(1, 0, 0)  # Change to color
 
 	# Wait for a short time before returning to the original texture
 	await get_tree().create_timer(0.2).timeout
 	
-	# Reset the button color back to normal (remove red flash)
-	button.modulate = Color(1, 1, 1)  # Reset to normal (white)
+	# Reset the button color back to normal
+	button.modulate = Color(1, 1, 1)  # Reset to normal
 
 	# Reset the texture to the normal texture after flashing
 	button.texture_normal = original_texture
@@ -100,7 +99,7 @@ func _on_button_pressed(button_index : int) -> void:
 		sequence_position += 1
 		if sequence_position == sound_sequence.size():
 			# Player completed the sequence correctly, increase score and sequence length
-			score += 10  # Increase score by 10 (adjust as needed)
+			score += 10  # Increase score
 			print("Correct! Moving to the next round.")
 			display_feedback("Correct!", Color(0, 1, 0))  # Green for correct
 			generate_sequence(sound_sequence.size() + 1)
