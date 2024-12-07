@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=3 uid="uid://d2cu23j2o2oy3"]
+
+[ext_resource type="Script" path="res://Musicgame.gd" id="1_pt1eu"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_pt1eu")
+
+[node name="Button 1" type="Button" parent="."]
+offset_left = 13.0
+offset_top = 23.0
+offset_right = 81.0
+offset_bottom = 91.0
+
+[node name="Button 2" type="Button" parent="."]
+offset_left = 104.0
+offset_top = 22.0
+offset_right = 172.0
+offset_bottom = 90.0
+
+[node name="Button 3" type="Button" parent="."]
+offset_left = 105.0
+offset_top = 104.0
+offset_right = 173.0
+offset_bottom = 172.0
+
+[node name="Button 4" type="Button" parent="."]
+offset_left = 13.0
+offset_top = 104.0
+offset_right = 81.0
+offset_bottom = 172.0
