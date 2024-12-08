@@ -1,60 +1,78 @@
-[gd_scene load_steps=5 format=3 uid="uid://d2cu23j2o2oy3"]
+[gd_scene load_steps=13 format=3 uid="uid://d2cu23j2o2oy3"]
 
 [ext_resource type="Script" path="res://Musicgame.gd" id="1_pt1eu"]
-[ext_resource type="Texture2D" uid="uid://bjgt68uswdsf4" path="res://art/Button 1 (off).png" id="3_qghvq"]
-[ext_resource type="Texture2D" uid="uid://bm0x8kp3uty4l" path="res://art/Button 1 (on).png" id="4_soxk4"]
+[ext_resource type="Texture2D" uid="uid://co2lmqpt67jm3" path="res://art/test2.png" id="2_kooht"]
+[ext_resource type="Texture2D" uid="uid://bonsjlnj5y5gg" path="res://art/Button 1 (off).png" id="3_qghvq"]
+[ext_resource type="Texture2D" uid="uid://bw4usi4cejd1d" path="res://art/Button 2 (off).png" id="4_1h4p7"]
+[ext_resource type="Texture2D" uid="uid://c8ysct50m8wep" path="res://art/Button 1 (on).png" id="4_soxk4"]
 [ext_resource type="PackedScene" uid="uid://cv4optxlb6kjm" path="res://Volumeslider.tscn" id="4_vry1o"]
+[ext_resource type="Texture2D" uid="uid://2e4pcxtq20ir" path="res://art/Button 2 (on).png" id="5_s8jd2"]
+[ext_resource type="Texture2D" uid="uid://crfccwqxll6cv" path="res://art/Button 3 (off).png" id="6_12kgl"]
+[ext_resource type="Texture2D" uid="uid://cqrlhnia83d42" path="res://art/Button 3 (on).png" id="7_nvmkc"]
+[ext_resource type="Texture2D" uid="uid://csb507pxu1nba" path="res://art/Button 4 (off).png" id="8_k8fvg"]
+[ext_resource type="Texture2D" uid="uid://bm6bs2sf7w3i7" path="res://art/Button 4 (on).png" id="9_evjwb"]
+[ext_resource type="Texture2D" uid="uid://b8tcfb7nparvc" path="res://art/overlay.png" id="11_1tarp"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_pt1eu")
 
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(593, 162)
+scale = Vector2(1.52381, 1.49806)
+texture = ExtResource("2_kooht")
+
 [node name="Button 1" type="TextureButton" parent="."]
-offset_left = 400.0
-offset_top = 258.0
-offset_right = 500.0
-offset_bottom = 358.0
+offset_left = 140.0
+offset_top = 336.0
+offset_right = 240.0
+offset_bottom = 646.0
 texture_normal = ExtResource("3_qghvq")
 texture_pressed = ExtResource("4_soxk4")
 
 [node name="Button 2" type="TextureButton" parent="."]
-offset_left = 282.0
-offset_top = 129.0
-offset_right = 382.0
-offset_bottom = 230.0
-texture_normal = ExtResource("3_qghvq")
-texture_pressed = ExtResource("4_soxk4")
+offset_left = 394.0
+offset_top = 342.0
+offset_right = 494.0
+offset_bottom = 652.0
+texture_normal = ExtResource("4_1h4p7")
+texture_pressed = ExtResource("5_s8jd2")
 
 [node name="Button 3" type="TextureButton" parent="."]
-offset_left = 280.0
-offset_top = 255.0
-offset_right = 380.0
-offset_bottom = 355.0
-texture_normal = ExtResource("3_qghvq")
-texture_pressed = ExtResource("4_soxk4")
+offset_left = 634.0
+offset_top = 336.0
+offset_right = 734.0
+offset_bottom = 646.0
+texture_normal = ExtResource("6_12kgl")
+texture_pressed = ExtResource("7_nvmkc")
 
 [node name="Button 4" type="TextureButton" parent="."]
-offset_left = 399.0
-offset_top = 131.0
-offset_right = 499.0
-offset_bottom = 231.0
-texture_normal = ExtResource("3_qghvq")
-texture_pressed = ExtResource("4_soxk4")
+offset_left = 869.0
+offset_top = 335.0
+offset_right = 969.0
+offset_bottom = 645.0
+texture_normal = ExtResource("8_k8fvg")
+texture_pressed = ExtResource("9_evjwb")
 
 [node name="ScoreLabel" type="Label" parent="."]
-offset_left = 349.0
-offset_top = 78.0
-offset_right = 438.0
-offset_bottom = 112.0
+offset_left = 30.0
+offset_top = 34.0
+offset_right = 119.0
+offset_bottom = 68.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(605, 450)
+scale = Vector2(1.144, 0.658)
+texture = ExtResource("11_1tarp")
 
 [node name="HSlider" parent="." instance=ExtResource("4_vry1o")]
-offset_left = 521.0
-offset_top = 229.0
-offset_right = 633.0
-offset_bottom = 248.0
+offset_left = 994.0
+offset_top = 43.0
+offset_right = 1106.0
+offset_bottom = 62.0
 bus_name = "Master"
 
 [node name="FeedbackLabel" type="Label" parent="."]
-offset_left = 355.0
-offset_top = 371.0
-offset_right = 449.0
-offset_bottom = 396.0
+offset_left = 35.0
+offset_top = 175.0
+offset_right = 129.0
+offset_bottom = 200.0

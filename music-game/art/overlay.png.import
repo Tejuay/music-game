@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c8ysct50m8wep"
-path="res://.godot/imported/Button 1 (on).png-ceab58a2c692915e0b96c59c2cbdfa2d.ctex"
+uid="uid://b8tcfb7nparvc"
+path="res://.godot/imported/overlay.png-8c2a5edc5a15584060fd8f76953f4577.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/Button 1 (on).png"
-dest_files=["res://.godot/imported/Button 1 (on).png-ceab58a2c692915e0b96c59c2cbdfa2d.ctex"]
+source_file="res://art/overlay.png"
+dest_files=["res://.godot/imported/overlay.png-8c2a5edc5a15584060fd8f76953f4577.ctex"]
 
 [params]
 
