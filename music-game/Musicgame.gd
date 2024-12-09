@@ -1,19 +1,17 @@
 extends Node2D
 
-# Declare variables
 @export var sound_sequence : Array[int] = []  # Store indices (0, 1, 2, 3)
-@export var sounds : Array = ["button 1.mp3", "button 2.mp3", "button 3.mp3", "button 4.mp3"]  # Sound file names
+@export var sounds : Array = ["button 1.mp3", "button 2.mp3", "button 3.mp3", "button 4.mp3"]
 var sequence_position : int = 0
-var is_playing_sequence : bool = false  # Prevent clicking during sequence playback
+var is_playing_sequence : bool = false  # Prevent clicking during sequence
 var score : int = 0  # Initialize score
 
-# Declare buttons with onready to connect them when the scene is ready
+#buttons
 @onready var button1 : TextureButton = $'Button 1'
 @onready var button2 : TextureButton = $'Button 2'
 @onready var button3 : TextureButton = $'Button 3'
 @onready var button4 : TextureButton = $'Button 4'
 
-# Texture for when the button is pressed
 @export var pressed_texture : Texture  
 
 # Normal textures for each button
@@ -58,13 +56,13 @@ func _ready():
 	feedback_label.visible = false
 	next_round_label.visible = false
 
-# Generate a random sequence of indices
+# Generate a random sequence
 func generate_sequence(length : int) -> void:
 	sound_sequence.clear()
 	for i in range(length):
-		sound_sequence.append(randi() % sounds.size())  # Store indices
+		sound_sequence.append(randi() % sounds.size())  # Store it
 
-# Play the sequence for the player
+# play the sequence for the player
 func play_sequence() -> void:
 	sequence_position = 0
 	is_playing_sequence = true
@@ -97,9 +95,9 @@ func get_audio_player_for_button(button_index: int) -> AudioStreamPlayer2D:
 			audio_player4.stream = load("res://sounds/" + sounds[button_index]) as AudioStream
 			return audio_player4
 		_:
-			# Handle invalid index (this should not happen)
+			# if invalid index
 			print("Invalid button index: ", button_index)
-			return audio_player1  # Default fallback (you can choose to return any player)
+			return audio_player1  # default fallback
 
 # Flash button when sound 
 func flash_button(button : TextureButton) -> void:
@@ -141,7 +139,7 @@ func _on_button_pressed(button_index : int) -> void:
 	else:
 		# Player made a mistake, reset sequence and start over
 		print("Wrong! Try again.")
-		display_feedback("Wrong!", Color(1, 0, 0))  # Red for wrong
+		display_feedback("Wrong!", Color(1, 0, 0)) 
 		await pause_on_mistake()
 		sequence_position = 0
 		play_sequence()
@@ -155,14 +153,14 @@ func update_score_label() -> void:
 func display_feedback(message: String, color: Color) -> void:
 	# Update the text and set the color
 	feedback_label.text = message
-	feedback_label.modulate = color  # Set text color based on correct/incorrect
+	feedback_label.modulate = color  # Set text color
 	feedback_label.visible = true  # Show the feedback
 
 	# Hide the feedback after a short time
 	await get_tree().create_timer(1.0).timeout  # Wait for 1 second
 	feedback_label.visible = false  # Hide it again
 
-# Add a pause when the player gets it wrong
+# pause when the player gets it wrong
 func pause_on_mistake() -> void:
 	await get_tree().create_timer(2.0).timeout  # Pause for 2 seconds before retrying
 

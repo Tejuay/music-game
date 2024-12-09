@@ -14,7 +14,7 @@ func _ready():
 # Function that runs when the Start Button is pressed
 func _on_start_button_pressed():
 	# Load and change to the main game scene
-	get_tree().change_scene_to_file("res://Main.tscn")  # Make sure the path to the game scene is correct
+	get_tree().change_scene_to_file("res://Main.tscn")
 
 func _on_exit_button_pressed():
 	# Quit the game

@@ -135,9 +135,9 @@ stream = ExtResource("16_jrwgb")
 [node name="NextRoundLabel" type="Label" parent="."]
 visible = false
 modulate = Color(0.47451, 0.94902, 0.227451, 1)
-offset_left = 339.0
-offset_top = 222.0
-offset_right = 599.0
-offset_bottom = 332.0
+offset_left = 320.0
+offset_top = 238.0
+offset_right = 580.0
+offset_bottom = 348.0
 theme_override_font_sizes/font_size = 80
 text = "\"\""
