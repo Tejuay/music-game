@@ -2,7 +2,7 @@ extends Node2D
 
 # Declare variables
 @export var sound_sequence : Array[int] = []  # Store indices (0, 1, 2, 3)
-@export var sounds : Array = ["Button 1.mp3", "Button 2.mp3", "Button 3.mp3", "Button 4.mp3"]  # Sound file names
+@export var sounds : Array = ["button 1.mp3", "button 2.mp3", "button 3.mp3", "button 4.mp3"]  # Sound file names
 var sequence_position : int = 0
 var is_playing_sequence : bool = false  # Prevent clicking during sequence playback
 var score : int = 0  # Initialize score
@@ -13,7 +13,7 @@ var score : int = 0  # Initialize score
 @onready var button3 : TextureButton = $'Button 3'
 @onready var button4 : TextureButton = $'Button 4'
 
-# Texture for when the button is presse
+# Texture for when the button is pressed
 @export var pressed_texture : Texture  
 
 # Normal textures for each button
@@ -28,12 +28,24 @@ var score : int = 0  # Initialize score
 # Feedback Label for showing correct/wrong messages
 @onready var feedback_label : Label = $'FeedbackLabel'
 
+# Preload AudioStreamPlayer nodes for each button
+@onready var audio_player1 : AudioStreamPlayer2D = $'AudioPlayer1'
+@onready var audio_player2 : AudioStreamPlayer2D = $'AudioPlayer2'
+@onready var audio_player3 : AudioStreamPlayer2D = $'AudioPlayer3'
+@onready var audio_player4 : AudioStreamPlayer2D = $'AudioPlayer4'
+
+# Label node for "Next Round" message
+@onready var next_round_label : Label = $'NextRoundLabel'
+
 func _ready():
 	# Connect button signals with the index using bind() instead of directly passing an array
 	button1.connect("pressed", Callable(self, "_on_button_pressed").bind(0))
 	button2.connect("pressed", Callable(self, "_on_button_pressed").bind(1))
 	button3.connect("pressed", Callable(self, "_on_button_pressed").bind(2))
 	button4.connect("pressed", Callable(self, "_on_button_pressed").bind(3))
+
+	# Add a delay before the game starts
+	await get_tree().create_timer(1.5).timeout 
 
 	# Generate the first sequence
 	generate_sequence(3)  # Starting with a sequence of 3 sounds
@@ -42,8 +54,9 @@ func _ready():
 	# Update the score display
 	update_score_label()
 
-	# Initially hide the feedback label
+	# Initially hide the feedback and next round labels
 	feedback_label.visible = false
+	next_round_label.visible = false
 
 # Generate a random sequence of indices
 func generate_sequence(length : int) -> void:
@@ -56,10 +69,7 @@ func play_sequence() -> void:
 	sequence_position = 0
 	is_playing_sequence = true
 	for index in sound_sequence:
-		var sound : AudioStream = load("res://sounds/" + sounds[index]) as AudioStream
-		var audio_player : AudioStreamPlayer = AudioStreamPlayer.new()
-		add_child(audio_player)
-		audio_player.stream = sound
+		var audio_player : AudioStreamPlayer2D = get_audio_player_for_button(index)
 		audio_player.play()
 
 		# Add visual feedback
@@ -70,6 +80,26 @@ func play_sequence() -> void:
 		await get_tree().create_timer(1.0).timeout  # Assuming each sound takes 1 second
 
 	is_playing_sequence = false  # Allow user to interact after the sequence is played
+
+# Get the appropriate AudioStreamPlayer for the button
+func get_audio_player_for_button(button_index: int) -> AudioStreamPlayer2D:
+	match button_index:
+		0:
+			audio_player1.stream = load("res://sounds/" + sounds[button_index]) as AudioStream
+			return audio_player1
+		1:
+			audio_player2.stream = load("res://sounds/" + sounds[button_index]) as AudioStream
+			return audio_player2
+		2:
+			audio_player3.stream = load("res://sounds/" + sounds[button_index]) as AudioStream
+			return audio_player3
+		3:
+			audio_player4.stream = load("res://sounds/" + sounds[button_index]) as AudioStream
+			return audio_player4
+		_:
+			# Handle invalid index (this should not happen)
+			print("Invalid button index: ", button_index)
+			return audio_player1  # Default fallback (you can choose to return any player)
 
 # Flash button when sound 
 func flash_button(button : TextureButton) -> void:
@@ -94,6 +124,10 @@ func _on_button_pressed(button_index : int) -> void:
 	if is_playing_sequence:
 		return  # Prevent clicks during sequence playback
 
+	# Play the respective sound for the pressed button
+	var audio_player : AudioStreamPlayer2D = get_audio_player_for_button(button_index)
+	audio_player.play()
+
 	# Check if the player clicked the correct button
 	if button_index == sound_sequence[sequence_position]:
 		sequence_position += 1
@@ -102,13 +136,13 @@ func _on_button_pressed(button_index : int) -> void:
 			score += 10  # Increase score
 			print("Correct! Moving to the next round.")
 			display_feedback("Correct!", Color(0, 1, 0))  # Green for correct
-			generate_sequence(sound_sequence.size() + 1)
-			play_sequence()
 			update_score_label()  # Update the score display
+			await start_next_round()
 	else:
 		# Player made a mistake, reset sequence and start over
 		print("Wrong! Try again.")
 		display_feedback("Wrong!", Color(1, 0, 0))  # Red for wrong
+		await pause_on_mistake()
 		sequence_position = 0
 		play_sequence()
 		update_score_label()  # Update the score display even on mistakes
@@ -127,3 +161,20 @@ func display_feedback(message: String, color: Color) -> void:
 	# Hide the feedback after a short time
 	await get_tree().create_timer(1.0).timeout  # Wait for 1 second
 	feedback_label.visible = false  # Hide it again
+
+# Add a pause when the player gets it wrong
+func pause_on_mistake() -> void:
+	await get_tree().create_timer(2.0).timeout  # Pause for 2 seconds before retrying
+
+func start_next_round():
+	# Display "Next Round" message
+	next_round_label.text = "Next Round!"
+	next_round_label.visible = true
+
+	# Wait for a short delay
+	await get_tree().create_timer(2.0).timeout  # Pause for 2 seconds
+
+	# Hide the message and generate the next sequence
+	next_round_label.visible = false
+	generate_sequence(sound_sequence.size() + 1)
+	play_sequence()

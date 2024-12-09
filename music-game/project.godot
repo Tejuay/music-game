@@ -11,6 +11,13 @@ config_version=5
 [application]
 
 config/name="Music Game"
-run/main_scene="res://Main.tscn"
+run/main_scene="res://titlescreen.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://art/icon.svg"
+
+[display]
+
+window/size/mode=2
+window/size/resizable=false
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"

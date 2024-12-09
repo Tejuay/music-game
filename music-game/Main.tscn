@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://d2cu23j2o2oy3"]
+[gd_scene load_steps=18 format=3 uid="uid://d2cu23j2o2oy3"]
 
 [ext_resource type="Script" path="res://Musicgame.gd" id="1_pt1eu"]
 [ext_resource type="Texture2D" uid="uid://co2lmqpt67jm3" path="res://art/test2.png" id="2_kooht"]
@@ -12,13 +12,18 @@
 [ext_resource type="Texture2D" uid="uid://csb507pxu1nba" path="res://art/Button 4 (off).png" id="8_k8fvg"]
 [ext_resource type="Texture2D" uid="uid://bm6bs2sf7w3i7" path="res://art/Button 4 (on).png" id="9_evjwb"]
 [ext_resource type="Texture2D" uid="uid://b8tcfb7nparvc" path="res://art/overlay.png" id="11_1tarp"]
+[ext_resource type="AudioStream" uid="uid://cuj4ib6rnjp7k" path="res://sounds/Background music.mp3" id="11_em110"]
+[ext_resource type="AudioStream" uid="uid://evda1g36ya1w" path="res://sounds/button 1.mp3" id="13_42h6l"]
+[ext_resource type="AudioStream" uid="uid://cgw4pktlup22y" path="res://sounds/button 2.mp3" id="14_8xfbd"]
+[ext_resource type="AudioStream" uid="uid://driuam7v7rumt" path="res://sounds/button 3.mp3" id="15_bei3u"]
+[ext_resource type="AudioStream" uid="uid://bhwapqgofajyv" path="res://sounds/button 4.mp3" id="16_jrwgb"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_pt1eu")
 
 [node name="Background" type="Sprite2D" parent="."]
-position = Vector2(593, 162)
-scale = Vector2(1.52381, 1.49806)
+position = Vector2(583, 163)
+scale = Vector2(1.462, 1.49806)
 texture = ExtResource("2_kooht")
 
 [node name="Button 1" type="TextureButton" parent="."]
@@ -28,6 +33,7 @@ offset_right = 240.0
 offset_bottom = 646.0
 texture_normal = ExtResource("3_qghvq")
 texture_pressed = ExtResource("4_soxk4")
+metadata/_edit_use_anchors_ = true
 
 [node name="Button 2" type="TextureButton" parent="."]
 offset_left = 394.0
@@ -36,6 +42,7 @@ offset_right = 494.0
 offset_bottom = 652.0
 texture_normal = ExtResource("4_1h4p7")
 texture_pressed = ExtResource("5_s8jd2")
+metadata/_edit_use_anchors_ = true
 
 [node name="Button 3" type="TextureButton" parent="."]
 offset_left = 634.0
@@ -44,6 +51,7 @@ offset_right = 734.0
 offset_bottom = 646.0
 texture_normal = ExtResource("6_12kgl")
 texture_pressed = ExtResource("7_nvmkc")
+metadata/_edit_use_anchors_ = true
 
 [node name="Button 4" type="TextureButton" parent="."]
 offset_left = 869.0
@@ -52,27 +60,84 @@ offset_right = 969.0
 offset_bottom = 645.0
 texture_normal = ExtResource("8_k8fvg")
 texture_pressed = ExtResource("9_evjwb")
+metadata/_edit_use_anchors_ = true
+
+[node name="Background music" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(6, 53)
+stream = ExtResource("11_em110")
+volume_db = -23.675
+autoplay = true
+bus = &"Background Music"
+parameters/looping = true
 
 [node name="ScoreLabel" type="Label" parent="."]
-offset_left = 30.0
-offset_top = 34.0
-offset_right = 119.0
-offset_bottom = 68.0
+offset_left = 6.0
+offset_top = 53.0
+offset_right = 95.0
+offset_bottom = 144.0
+theme_override_font_sizes/font_size = 66
+metadata/_edit_use_anchors_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(605, 450)
-scale = Vector2(1.144, 0.658)
+[node name="Foreground grass" type="Sprite2D" parent="."]
+position = Vector2(562, 450)
+scale = Vector2(1.23, 0.658)
 texture = ExtResource("11_1tarp")
 
-[node name="HSlider" parent="." instance=ExtResource("4_vry1o")]
-offset_left = 994.0
-offset_top = 43.0
-offset_right = 1106.0
-offset_bottom = 62.0
+[node name="Volumeslider" parent="." instance=ExtResource("4_vry1o")]
+offset_left = 967.0
+offset_top = 62.0
+offset_right = 1110.0
+offset_bottom = 160.0
 bus_name = "Master"
+metadata/_edit_use_anchors_ = true
+
+[node name="Musicslider" parent="." instance=ExtResource("4_vry1o")]
+offset_left = 966.0
+offset_top = 168.0
+offset_right = 1118.0
+offset_bottom = 190.0
+bus_name = "Background Music"
 
 [node name="FeedbackLabel" type="Label" parent="."]
-offset_left = 35.0
-offset_top = 175.0
-offset_right = 129.0
-offset_bottom = 200.0
+offset_left = 3.0
+offset_top = 181.0
+offset_right = 97.0
+offset_bottom = 265.0
+theme_override_font_sizes/font_size = 61
+metadata/_edit_use_anchors_ = true
+
+[node name="Music volume label" type="Label" parent="."]
+offset_left = 989.0
+offset_top = 142.0
+offset_right = 1115.0
+offset_bottom = 180.0
+text = "Music volume"
+
+[node name="Volume label" type="Label" parent="."]
+offset_left = 1003.0
+offset_top = 77.0
+offset_right = 1129.0
+offset_bottom = 115.0
+text = "Volume"
+
+[node name="AudioPlayer1" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("13_42h6l")
+
+[node name="AudioPlayer2" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("14_8xfbd")
+
+[node name="AudioPlayer3" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("15_bei3u")
+
+[node name="AudioPlayer4" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("16_jrwgb")
+
+[node name="NextRoundLabel" type="Label" parent="."]
+visible = false
+modulate = Color(0.47451, 0.94902, 0.227451, 1)
+offset_left = 339.0
+offset_top = 222.0
+offset_right = 599.0
+offset_bottom = 332.0
+theme_override_font_sizes/font_size = 80
+text = "\"\""
