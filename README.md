@@ -1,5 +1,6 @@
 # music-game
  
+Open Godot file called "Title screen" to start the game!!!
 
 I decided to make a music memory game called Tree Friends
 The game creates a random sequence and plays it through any of the 4 friends availabe. You must remember the order they sung in and repeat it back by clicking on them. The first sequence is 3 sounds long but it increases by 1 per round.
